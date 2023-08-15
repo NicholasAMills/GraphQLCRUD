@@ -14,6 +14,11 @@ cd ".\server"
 npm install
 ```
 
+create .env file
+```bash
+MONGODB_URL = "mongodb+srv://{Your MongoDB url here}"
+```
+
 ## Usage
 
 ```bash
