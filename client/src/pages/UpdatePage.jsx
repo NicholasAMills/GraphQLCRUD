@@ -16,8 +16,13 @@ const UpdatePage = () => {
 
 
     const handleSearch = () => {
-        setKeys(["name", "description"])
-        setRecipes(querySearch.data.recipe);
+        if (!querySearch.error){
+            setKeys(["name", "description"])
+            setRecipes(querySearch.data.recipe);
+        }
+        else {
+            alert("error: ", querySearch.error);
+        }
     }
 
     const handleOnChange = (e) => {
@@ -30,16 +35,21 @@ const UpdatePage = () => {
 
     const handleEdit = (action) => {
         if (action === "update"){
-            editRecipe({
-                variables: {
-                    id: searchId,
-                    recipeInput: {
-                        name: recipes.name,
-                        description: recipes.description
+            if (recipes.name.trim() && recipes.description.trim()){
+                editRecipe({
+                    variables: {
+                        id: searchId,
+                        recipeInput: {
+                            name: recipes.name,
+                            description: recipes.description
+                        }
                     }
-                }
-            })
-            alert(`Updated!\nName: ${recipes.name}\nDescription: ${recipes.description}`)
+                })
+                alert(`Updated!\nName: ${recipes.name}\nDescription: ${recipes.description}`)
+            }
+            else{
+                alert("Fields cannot be empty")
+            }
         }
         else if (action === "delete"){
             if (confirm("Delete this recipe?")){
