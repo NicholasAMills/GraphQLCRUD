@@ -2,6 +2,7 @@ const { gql } = require('apollo-server')
 
 module.exports = gql`
 type Recipe {
+    id: String
     name: String
     description: String
     createdAt: String

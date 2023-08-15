@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useQuery } from '@apollo/client';
 import { CreateTable } from '../components';
 import { GET_ALL_RECIPES, GET_RECIPES, QUERY } from '../GraphQL';
@@ -17,6 +17,7 @@ const GetPage = () => {
     const [createdAtCb, setCreatedAtCb] = useState({key: "createdAt", display: "Created At", isChecked: true});
     const [thumbsUpCb, setThumbsUpCb] = useState({key: "thumbsUp", display: "Thumbs Up", isChecked: true});
     const [thumbsDownCb, setThumbsDownCb] = useState({key: "thumbsDown", display: "Thumbs Down", isChecked: true});
+    const [idCb, setIdCb] = useState({isChecked: true})
 
     // GraphQL queries
     const querySearch = useQuery(QUERY, {variables: {"id":searchId}});
@@ -26,14 +27,20 @@ const GetPage = () => {
         // Update filter keys to only checked boxes
         var arr = []
         const checkedBoxes = document.querySelectorAll('input[type=checkbox]:checked');
-        for (let box of checkedBoxes) arr.push(box.name);
+        for (let box of checkedBoxes) arr.push(box.id);
 
         setFilterKeys(arr);
     }
 
     function handleSearch() {
-        setKeys()
-        setRecipes([querySearch.data.recipe]);
+        if (!querySearch.error){
+            setKeys()
+            if(querySearch.data.recipe)
+                setRecipes([querySearch.data.recipe]);  
+        }
+        else{
+            alert(querySearch.error)
+        }
     }
 
     function handleGetAll() {
@@ -70,7 +77,18 @@ const GetPage = () => {
                 <label className='text-black p-2'>
                     <input
                         type="checkbox"
-                        name="name"
+                        name="ID"
+                        id="id"
+                        checked={idCb.isChecked}
+                        onChange={() => setIdCb({ ...idCb, isChecked: !idCb.isChecked})}
+                    />
+                    <label>ID</label>
+                </label>   
+                <label className='text-black p-2'>
+                    <input
+                        type="checkbox"
+                        name="Name"
+                        id="name"
                         checked={nameCb.isChecked}
                         onChange={() => setNameCb({ ...nameCb, isChecked: !nameCb.isChecked})}
                     />
@@ -79,7 +97,8 @@ const GetPage = () => {
                 <label className='text-black p-2'>
                     <input
                         type="checkbox"
-                        name="description"
+                        name="Description"
+                        id="description"
                         checked={descriptionCb.isChecked}
                         onChange={() => setDescriptionCb({ ...descriptionCb, isChecked: !descriptionCb.isChecked})}
                     />
@@ -88,7 +107,8 @@ const GetPage = () => {
                 <label className='text-black p-2'>
                     <input
                         type="checkbox"
-                        name="createdAt"
+                        name="Created At"
+                        id="createdAt"
                         checked={createdAtCb.isChecked}
                         onChange={() => setCreatedAtCb({ ...createdAtCb, isChecked: !createdAtCb.isChecked})}
                     />
@@ -97,7 +117,8 @@ const GetPage = () => {
                 <label className='text-black p-2'>
                     <input
                         type="checkbox"
-                        name="thumbsUp"
+                        name="Thumbs Up"
+                        id="thumbsUp"
                         checked={thumbsUpCb.isChecked}
                         onChange={() => setThumbsUpCb({ ...thumbsUpCb, isChecked: !thumbsUpCb.isChecked})}
                     />
@@ -106,7 +127,8 @@ const GetPage = () => {
                 <label className='text-black p-2'>
                     <input
                         type="checkbox"
-                        name="thumbsDown"
+                        name="Thumbs Down"
+                        id="thumbsDown"
                         checked={thumbsDownCb.isChecked}
                         onChange={() => setThumbsDownCb({ ...thumbsDownCb, isChecked: !thumbsDownCb.isChecked})}
                     />

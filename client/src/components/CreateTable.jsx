@@ -26,7 +26,11 @@ const CreateTable = ({ recipes, isUpdate, keys, handleEdit=null, handleOnChange=
       /* To be able to reuse this component, 'recipes' needs to be checked for a single value, in which case it will not be an array.
          Forcing 'recipes' to be an array with one value caused issues in other areas.
       */
-      return Array.isArray(recipes) ? recipes.map((recipe) => {
+      return (recipes.length == 0 && keys.length > 0) ? 
+      <tr>
+        <td>No records found</td>
+      </tr>
+      : Array.isArray(recipes) ? recipes.map((recipe) => {
           return <tr key={recipe.createdAt}>
               {
                 !isUpdate ? 
@@ -147,7 +151,6 @@ const CreateTable = ({ recipes, isUpdate, keys, handleEdit=null, handleOnChange=
           </table>
       )
     }
-
     return renderTable(keys);
 }
 

@@ -8,21 +8,26 @@ const Form = () => {
   const [createRecipe, { loading, error, data }] = useMutation(CREATE_RECIPE)
 
   const addRecipe = () => {
-    createRecipe({
-        variables: {
-            recipeInput: {
-                name: name,
-                description: description
-            }
-        }
-    })
+    if (name.trim() && description.trim()){
+      createRecipe({
+          variables: {
+              recipeInput: {
+                  name: name,
+                  description: description
+              }
+          }
+      })
+      alert("Recipe added!");
+  
+      setName("");
+      setDescription("");
+    }
+    else {
+      alert("All fields must be filled")
+    }
 
-    alert("Recipe added!");
 
-    setName("");
-    setDescription("");
-
-    if (error) console.log("error: ", error)
+    if (error) alert("error: ", error)
   }
 
   useEffect(() => {
@@ -32,7 +37,7 @@ const Form = () => {
     },[data])
 
   return (
-    <div>
+    <form>
             <input
                 type='text'
                 placeholder='Recipe Name'
@@ -51,7 +56,7 @@ const Form = () => {
             /> <br/>
             
             <button className='font-inter font-medium bg-[#6469ff] text-white px-4 py-2 rounded-md' onClick={addRecipe}>Add Recipe!</button>
-    </div>
+    </form>
   )
 }
 

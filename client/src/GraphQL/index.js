@@ -15,6 +15,7 @@ const GET_RECIPES = gql`
   const QUERY = gql`
     query Query($id: ID!){
       recipe(ID: $id) {
+        id
         name
         description
         createdAt
@@ -27,6 +28,7 @@ const GET_RECIPES = gql`
   const GET_ALL_RECIPES = gql`
     query Query {
       getAllRecipes {
+        id
         name
         description
         createdAt
