@@ -12,12 +12,12 @@ const GetPage = () => {
     const [filterKeys, setFilterKeys] = useState([])
 
     // Checkboxes
-    const [nameCb, setNameCb] = useState({key: "name", display: "Name", isChecked: true});
-    const [descriptionCb, setDescriptionCb] = useState({key: "description", display: "Description", isChecked: true});
-    const [createdAtCb, setCreatedAtCb] = useState({key: "createdAt", display: "Created At", isChecked: true});
-    const [thumbsUpCb, setThumbsUpCb] = useState({key: "thumbsUp", display: "Thumbs Up", isChecked: true});
-    const [thumbsDownCb, setThumbsDownCb] = useState({key: "thumbsDown", display: "Thumbs Down", isChecked: true});
-    const [idCb, setIdCb] = useState({isChecked: true})
+    const [nameCb, setNameCb] = useState(true);
+    const [descriptionCb, setDescriptionCb] = useState(true);
+    const [createdAtCb, setCreatedAtCb] = useState(true);
+    const [thumbsUpCb, setThumbsUpCb] = useState(true);
+    const [thumbsDownCb, setThumbsDownCb] = useState(true);
+    const [idCb, setIdCb] = useState(true)
 
     // GraphQL queries
     const querySearch = useQuery(QUERY, {variables: {"id":searchId}});
@@ -79,8 +79,8 @@ const GetPage = () => {
                         type="checkbox"
                         name="ID"
                         id="id"
-                        checked={idCb.isChecked}
-                        onChange={() => setIdCb({ ...idCb, isChecked: !idCb.isChecked})}
+                        checked={idCb}
+                        onChange={() => setIdCb(!idCb)}
                     />
                     <label>ID</label>
                 </label>   
@@ -89,8 +89,8 @@ const GetPage = () => {
                         type="checkbox"
                         name="Name"
                         id="name"
-                        checked={nameCb.isChecked}
-                        onChange={() => setNameCb({ ...nameCb, isChecked: !nameCb.isChecked})}
+                        checked={nameCb}
+                        onChange={() => setNameCb(!nameCb)}
                     />
                     <label>Name</label>
                 </label>   
@@ -99,8 +99,8 @@ const GetPage = () => {
                         type="checkbox"
                         name="Description"
                         id="description"
-                        checked={descriptionCb.isChecked}
-                        onChange={() => setDescriptionCb({ ...descriptionCb, isChecked: !descriptionCb.isChecked})}
+                        checked={descriptionCb}
+                        onChange={() => setDescriptionCb(!descriptionCb)}
                     />
                     <label>Description</label>
                 </label> 
@@ -109,8 +109,8 @@ const GetPage = () => {
                         type="checkbox"
                         name="Created At"
                         id="createdAt"
-                        checked={createdAtCb.isChecked}
-                        onChange={() => setCreatedAtCb({ ...createdAtCb, isChecked: !createdAtCb.isChecked})}
+                        checked={createdAtCb}
+                        onChange={() => setCreatedAtCb(!createdAtCb)}
                     />
                     <label>Created At</label>
                 </label> 
@@ -119,8 +119,8 @@ const GetPage = () => {
                         type="checkbox"
                         name="Thumbs Up"
                         id="thumbsUp"
-                        checked={thumbsUpCb.isChecked}
-                        onChange={() => setThumbsUpCb({ ...thumbsUpCb, isChecked: !thumbsUpCb.isChecked})}
+                        checked={thumbsUpCb}
+                        onChange={() => setThumbsUpCb(!thumbsUpCb)}
                     />
                     <label>Thumbs Up</label>
                 </label> 
@@ -129,13 +129,13 @@ const GetPage = () => {
                         type="checkbox"
                         name="Thumbs Down"
                         id="thumbsDown"
-                        checked={thumbsDownCb.isChecked}
-                        onChange={() => setThumbsDownCb({ ...thumbsDownCb, isChecked: !thumbsDownCb.isChecked})}
+                        checked={thumbsDownCb}
+                        onChange={() => setThumbsDownCb(!thumbsDownCb)}
                     />
                     <label>Thumbs Down</label>
                 </label> 
             </div>
-            {<CreateTable recipes={recipes} isUpdate={false} keys={filterKeys} />}
+            {filterKeys.length > 0 && <CreateTable recipes={recipes} isUpdate={false} keys={filterKeys} />}
         </div>
     )
 }
