@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useQuery } from '@apollo/client';
 import { CreateTable } from '../components';
-import { GET_ALL_RECIPES, GET_RECIPES, QUERY } from '../GraphQL';
+import { GET_ALL_RECIPES, QUERY } from '../GraphQL';
 
 
 const GetPage = () => {
